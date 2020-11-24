@@ -1,0 +1,11 @@
+# /etc/systemd/system/batteryd.service
+#
+[Unit]
+Description=Battery charge monitoring service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/batteryd
+
+[Install]
+WantedBy=multi-user.target

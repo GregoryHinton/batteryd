@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# /usr/local/bin/batteryd
+#
+# batteryd -- Monitor battery, beep if low.
+#             Run by batteryd.service
+#             Assumes there is a `beep` program.
+
+THRESHOLD=20
+
+while :; do
+    capacity="$(cat /sys/class/power_supply/BAT/capacity)"
+    online="$(cat /sys/class/power_supply/AC/online)"
+    if ((capacity <= $THRESHOLD  &&  online != 1)); then 
+        beep; beep; beep; sleep 2
+    else
+        sleep 30
+    fi
+done
