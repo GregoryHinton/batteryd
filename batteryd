@@ -1,16 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 #
 # batteryd -- Monitor battery, beep if low.
 #             Run by /etc/systemd/system/batteryd.service .
 #             Assumes there is a 'beep' program available.
 #
-# Note: the "(( ... ))" expression requires bash instead of sh.
-#
 LOW_LEVEL=20
 while :; do
     capacity="$(cat /sys/class/power_supply/BAT/capacity)"
     online="$(cat /sys/class/power_supply/AC/online)"
-    if ((capacity <= LOW_LEVEL  &&  online != 1)); then 
+    if [ "$capacity" -le "$LOW_LEVEL"  -a  "$online" -ne "1" ]; then 
         beep; beep; beep; sleep 2
     else
         sleep 30
